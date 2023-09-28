@@ -1,0 +1,73 @@
+//User function template in C++
+
+class Solution{
+    
+    // private: 
+    
+    // bool binarySearch(int searchEle, int b[], int start, int end){
+    //     int m = end+1;
+    //     sort(b, b+m);
+        
+    //     while(start<=end){
+            
+    //         int mid =0;
+            
+    //         mid = (start + end)/2;
+            
+            
+    //         if(b[mid] == searchEle){
+    //             return true;
+    //         }
+            
+    //         else if( searchEle> b[mid]){
+    //             start = mid+1;
+    //             // binarySearch(searchEle, b, start, end);
+                
+    //         }
+    //         else{
+    //             end = mid-1;
+    //             // binarySearch(searchEle, b, start, end);
+    //         }
+            
+            
+    //     }
+    //     return false;
+    
+    public:
+    //Function to return the count of number of elements in union of two arrays
+    int doUnion(int a[], int n, int b[], int m)  {
+        
+        // int repCount=0, nonRepOfA = 0;
+        // for(int i =0; i<n; i++){
+        //     if( binarySearch(a[i], b, 0, m-1) ){
+        //         repCount++;
+
+        //     }
+        // }
+        
+        // nonRepOfA = n - repCount;
+        
+        // // cout<<nonRepOfA<<" ";
+        // return m+nonRepOfA;
+        
+           set<int> setA;
+        set<int> setB;
+
+        for (int i = 0; i < n; i++) {
+            setA.insert(a[i]);
+        }
+
+        for (int i = 0; i < m; i++) {
+            setB.insert(b[i]);
+        }
+
+        set<int> unionSet(setA);
+        for (int num : setB) {
+            unionSet.insert(num);
+        }
+
+        return unionSet.size();
+    }
+    
+    
+};
