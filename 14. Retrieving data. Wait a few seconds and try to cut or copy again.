@@ -1,0 +1,55 @@
+class Solution {
+  public:
+    int getMinDiff(int arr[], int n, int k) {
+        
+        //this logic is wrong as i am decreasing all the elements 
+        // after that finding the minimum between the tallest and 
+        // the smallest tower
+        
+        
+        //  int maxi = INT_MIN, mini = INT_MAX;
+        //  for(int i = 0; i<n; i++){
+        //      if(arr[i] - k <= 0){
+        //          arr[i] =  arr[i] + k;
+        //      }
+        //      else{
+        //          arr[i] = arr[i] - k;
+        //      }
+             
+        //      maxi = max(arr[i], maxi);
+        //      mini = min(arr[i], mini);
+        //  }
+         
+        //  for(int i = 0; i<n; i++){
+        //      cout<<arr[i]<<" ";
+        //  }
+        //  cout<<endl;
+         
+        //  cout<<maxi<<" "<<mini<<" "<<endl;
+         
+        //   return  maxi  - mini;
+        sort(arr, arr+n);
+        
+        int maxi = INT_MIN, mini = INT_MAX;
+               
+            int initialMin = arr[0];
+            int initialMax = arr[n-1];
+            
+            int ans = initialMax- initialMin;
+        
+        
+        for(int i =1; i<n; i++){
+            if(arr[i] - k < 0) continue;
+     
+            
+            maxi = max(arr[i-1]+k, arr[n-1]-k);
+            mini = min(arr[0]+k, arr[i]-k);
+            
+            ans = min(ans, maxi- mini);
+            
+        } 
+                    return ans;
+              
+
+    }
+};
