@@ -1,0 +1,61 @@
+class Solution{
+  public:
+  
+    long long merge(long long arr[], int lo, int mid, int hi){
+        
+        long long temp[hi + 1];
+        long   invCount =0 ;
+        int ptr1 = lo, ptr2 = mid +1, pos=0;
+            
+        while(ptr1 <= mid && ptr2 <= hi){
+
+            if(arr[ptr1] > arr[ptr2]){
+                
+                temp[pos++] = arr[ptr2++];
+                invCount += mid - ptr1 + 1;
+                
+            }
+            else {
+                temp[pos++] = arr[ptr1++];
+            }
+                    
+        }    
+        
+        while(ptr1 <= mid){
+            temp[pos++] = arr[ptr1++];
+        } 
+        
+        while(ptr2 <= hi){
+            temp[pos++] = arr[ptr2++];
+        }
+        
+        for(int i = 0; i<pos; i++){
+            arr[lo + i ]  = temp[i];
+         }
+        
+        return invCount;
+    }
+    // arr[]: Input Array
+    // N : Size of the Array arr[]
+    // Function to count inversions in the array.
+    long long mergeSort(long long arr[], int lo, int hi){
+        
+        if(lo >= hi) return 0; 
+        
+        int mid = (lo + hi)/2;
+        long  invCount =0;
+        invCount=mergeSort(arr, lo, mid);
+        invCount += mergeSort(arr, mid +1, hi);
+        invCount += merge(arr, lo, mid, hi);
+        
+        return invCount;
+        
+    }
+    
+    long long int inversionCount(long long arr[], long long N)
+    {
+        
+        return mergeSort(arr, 0, N-1);
+    }
+
+};
