@@ -1,0 +1,74 @@
+class Solution {
+public:
+
+    int merge(vector<int>& arr, int lo, int mid, int hi){             
+        
+        int temp[hi + 1];
+        // long   invCount =0 ;
+        int ptr1 = lo, ptr2 = mid +1, pos=0;
+        int maxi = INT_MIN;
+        int tempPtr1 =0;
+
+        while(ptr1 <= mid && ptr2 <= hi){
+
+            if(arr[ptr1] < arr[ptr2]){
+                
+                // tempPtr1 = ptr1;
+                // while(tempPtr1 < mid+1){
+                    
+                //    maxi = max(maxi, arr[ptr2] - arr[tempPtr1++]);
+
+                // }
+                // int lowBuy = mid;
+                // cout<<arr[ptr2]<<" "<<arr[mid]<<" "<<endl;
+                maxi = max(maxi, arr[ptr2] - arr[mid]);
+
+                // tempPtr1 = ptr1;
+                temp[pos++] = arr[ptr2++];
+                
+            }
+            else {
+                temp[pos++] = arr[ptr1++];
+            }
+                    
+        }    
+        
+        while(ptr1 <= mid){
+            temp[pos++] = arr[ptr1++];
+        } 
+        
+        while(ptr2 <= hi){
+            temp[pos++] = arr[ptr2++];
+        }
+        
+        for(int i = 0; i<pos; i++){
+            arr[lo + i ]  = temp[i];
+         }
+        
+        return maxi;
+    }
+    // arr[]: Input Array
+    // N : Size of the Array arr[]
+    // Function to count inversions in the array.
+    int mergeSort(vector<int>& arr, int lo, int hi){
+        
+        if(lo >= hi) return 0; 
+        
+        int mid = (lo + hi)/2;
+        int  maxi =0;
+        maxi= mergeSort(arr, lo, mid);
+        maxi = max(maxi, mergeSort(arr, mid +1, hi) );
+        maxi = max(maxi,  merge(arr, lo, mid, hi) );
+        
+        return maxi;
+        
+    }
+    
+
+    int maxProfit(vector<int>& prices) {
+        
+        int n = prices.size();
+        return mergeSort(prices, 0, n-1 );
+
+    }
+};
