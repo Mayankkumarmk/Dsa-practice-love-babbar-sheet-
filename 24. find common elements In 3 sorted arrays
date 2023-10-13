@@ -1,0 +1,101 @@
+class Solution
+{
+    public: 
+    
+        // bool binarySearch(int srhComm, int B[], int lo, int hi){
+            
+        //     while(lo<= hi){
+                
+        //         int mid = (lo+hi)/2;
+            
+        //         if(srhComm == B[mid]) return true;
+        //         else if(srhComm < B[mid]){
+        //             hi = mid-1;
+                    
+        //         }else{
+        //             lo = mid+1;
+        //         }
+                
+        //     }
+            
+        //     return false;
+        // }
+        
+        
+        vector <int> commonElements (int A[], int B[], int C[], int n1, int n2, int n3){
+            
+            // vector<int> result;
+            // int srhComm = 0;
+            
+            // for(int i=0; i<n1; i++){
+            //   srhComm =A[i];
+               
+            //   if(binarySearch(srhComm, B, 0, n2-1)){
+                  
+            //         if(binarySearch(srhComm, C, 0, n3 -1)){
+            //             int temp = 0;
+            //             if(result.size() != 0){
+                            
+            //                 temp = result.back();
+                            
+            //                 if(temp == srhComm){
+                              
+            //                     continue;
+            //                 }
+            //             }
+                            
+            //             result.push_back(srhComm);    
+    
+            //         }
+            //     } 
+               
+            // }
+            // return result;
+             // optimize using extra space
+             
+             
+             vector<int> result;
+             set<int> set1;
+             set<int> set2;
+             set<int> set3;
+                map<int, int> map;
+             for(int i=0; i<n1; i++){
+                 set1.insert(A[i]);
+             }
+             
+             for(int i: set1){
+                 map[i]++;
+                 
+             }
+             
+             // for second arr            
+             for(int i=0; i<n2; i++){
+                 set2.insert(B[i]);
+             }
+             
+             for(int i: set2){
+                 map[i]++;
+                 
+             }
+             
+            //for third arr
+             for(int i=0; i<n3; i++){
+                 set3.insert(C[i]);
+             }
+             
+             for(int i: set3){
+                 map[i]++;
+                 
+             }
+             
+             //iterate throught the map 
+             
+             for(auto pair: map){
+                 if(pair.second == 3) result.push_back(pair.first);
+             }
+            return result;
+             
+        }
+
+
+};
