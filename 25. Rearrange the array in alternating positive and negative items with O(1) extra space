@@ -1,0 +1,66 @@
+class Solution{
+    public:
+    // arr: input array
+    // n: size of array
+    //Function to rearrange an array so that arr[i] becomes arr[arr[i]]
+    //with O(1) extra space.
+    void arrange(long long arr[], int n) {
+        
+        
+        //  arr[0]   =      n  *    arr[0] +    arr[arr[0]];
+        // cout<<arr[0]<<" ";
+        // if(n>1){
+            
+            for(int i = 0; i<n; i++){
+            
+                   if(arr[i] < i){
+                       
+                    //   if(arr[i] == arr[arr[i]])continue;
+                       // this is because we dont have to
+                       //change the value on this index as it is accepting the value of index
+                       // which has has valule as that of the index.
+                       
+                       //if we modify this index value then it will give wrong old value
+                       //as it has gotton the wrong value from the transposse of the index
+                       //as 
+                       
+                       
+                       arr[i]   =      n  *    arr[i] +    (arr[arr[i]]/n) ; 
+                       
+                   }
+                   
+                  
+                   else if(arr[i] >= i){
+                        arr[i]   =      n  *    arr[i] +    (arr[arr[i]]) ; 
+                       
+                   }
+                   
+                
+                //   ^             ^           ^              ^
+                //   |             |           |              |
+               // Divident = divisor * quotient(old value) + remainder(new Value)
+          // (modified value)
+            }
+             
+            
+        // }
+       
+    //   cout<<2%6;
+    //     for(int i=0; i<n; i++){
+            
+    //         cout<<arr[i]<<" ";
+            
+    //     }
+        
+        for(int i=0; i<n; i++){
+            
+            arr[i]%=n;
+            
+        }
+        
+        
+        
+    }
+    
+    
+};
