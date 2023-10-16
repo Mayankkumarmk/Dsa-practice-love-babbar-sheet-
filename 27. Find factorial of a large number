@@ -1,0 +1,69 @@
+class Solution {
+public:
+    vector<int> factorial(int N){
+        
+        
+        //getting wrong answer as the vallue of the fact is very large cannot be 
+        //strored inside the  data type.
+        
+        // can be done by storing each value of the fact inside the vector at diff. index.
+        vector<int> result;
+        
+        int  product=1 ,quotient=0,   carry =0;
+        result.push_back(1);
+        for(int i = 2; i<=N; i++){
+            
+            // result*= i;
+            int n = result.size();
+            for( int j = 0; j<n; j++){
+                
+                 product = result[j] * i + carry;
+                 quotient = product % 10;
+                result[j] = quotient;
+                // cout<<result[j]<<" ";
+                 carry = product/10;
+                 
+                
+            }
+            
+            while(carry != 0){
+                
+                result.push_back(carry % 10);
+                carry = carry/10;
+                
+            }
+            
+            
+        }
+            
+     
+        
+        int lo = 0, hi = result.size()-1;   
+        while(lo<hi){
+            
+            swap(result[lo++], result[hi--]);
+            
+            
+        }
+        return result;
+        
+        
+        // string strFact = to_string(fact);
+        
+        
+        // for(char strFactDigits: strFact){
+            
+        //      Digit = strFactDigits - '0';
+        //     result.push_back(Digit);
+            
+        // }
+        
+        
+        // return result;
+        
+        
+        //recursion method
+        
+        
+    }
+};
