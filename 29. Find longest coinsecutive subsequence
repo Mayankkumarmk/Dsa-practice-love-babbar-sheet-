@@ -1,0 +1,59 @@
+class Solution{
+  public:
+    // arr[] : the input array
+    // N : size of the array arr[]
+    
+    //Function to return length of longest subsequence of consecutive integers.
+    int findLongestConseqSubseq(int arr[], int N)
+    {
+       
+       
+       if(N ==1)return 1;
+    //   set<int> set;
+    //   for(int i = 0; i<N; i++){
+    //       set.insert(arr[i]);
+           
+    //   }
+       
+    //   for(int i: set){
+    //       cout<<i<<" ";
+           
+    //   }
+    
+    
+       sort(arr, arr+N);
+       
+       int maxi =1;
+       int larSubSeq = INT_MIN;
+       for(int i  = 1; i<N; i++){
+           
+           if(arr[i-1] == arr[i]-1 ){
+               
+               if(maxi == 1){
+                   
+                   maxi = (arr[i] - arr[i-1]) +1;
+                //   cout<<maxi;
+               }else{
+                   maxi++;
+                //   cout<<maxi;
+               }
+               
+               
+           }else if(arr[i-1]  == arr[i]){
+               
+               continue;
+               
+           }
+           
+           
+           else{
+               
+               maxi = 1;
+           }
+           
+           larSubSeq = max(larSubSeq, maxi);
+       }
+       
+       return larSubSeq;
+    }
+};
