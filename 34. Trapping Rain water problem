@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        
+        int n = height.size();
+        vector<int> right (n);
+        vector<int> left(n);
+
+        int maxiL = INT_MIN;
+        for(int i = 1; i<n; i++){
+
+            maxiL = max(maxiL, height[i-1]);
+            left[i]= maxiL;
+
+        }
+
+        int maxiR = INT_MIN;
+        for(int i = n-2; i>=0; i--){
+
+            maxiR = max(maxiR, height[i+1]);
+            right[i]=maxiR;
+
+        }
+
+
+        int totalWater= 0;
+        for(int i = 1; i<n-1; i++){
+
+            if(height[i]> right[i] || height[i]>left[i])continue;
+            int mini=min(right[i], left[i]);
+            int water = mini-height[i];
+
+             totalWater += water;
+
+        }
+
+         return totalWater;
+    }
+   
+};
