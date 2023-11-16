@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int getLen(ListNode* head){
+        int cnt = 0;
+        while(head !=NULL){
+            cnt++;
+            head = head->next;
+        }
+        return cnt;
+    }
+    ListNode* middleNode(ListNode* head) {
+        int n = getLen(head), i;
+
+        if(n%2==0){
+            i = n/2 + 1;
+        }
+        else{
+            i = (n+1)/2;
+        }
+
+        // find node at ith position
+        int val = 1;
+        ListNode* temp = head;
+        while(val < i){
+            temp = temp->next;
+            val++;
+        }
+        return temp;
+    }
+};
