@@ -1,0 +1,47 @@
+class Solution {
+private:
+    ListNode* revLinklist(ListNode* head) {
+        ListNode* curr = head;
+        ListNode* prev = NULL;
+        ListNode* nxt;
+        while (curr != NULL) {
+            nxt = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = nxt;
+        }
+        return prev;
+    }
+
+public:
+    bool isPalindrome(ListNode* head) {
+
+        ListNode* curr = head;
+        ListNode* copyList = new ListNode(curr->val);
+        ListNode* copyPtr = copyList;
+
+        // copying linklist for reversal;
+        while (curr->next != NULL) {
+            curr = curr->next;
+            copyPtr->next = new ListNode(curr->val);
+            copyPtr = copyPtr->next;
+        }
+
+        copyPtr->next = NULL;
+        curr = head;
+        copyPtr = copyList;
+
+        ListNode* revList = revLinklist(copyPtr);
+        ListNode* revPtr = revList;
+
+        while (curr && revPtr) {
+            if (curr->val == revPtr->val) {
+                curr = curr->next;
+                revPtr = revPtr->next;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+};
