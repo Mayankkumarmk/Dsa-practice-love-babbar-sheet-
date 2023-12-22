@@ -1,0 +1,40 @@
+Node* flatten(Node* root) {
+    // if (!root) {
+    //     return nullptr;
+    // }
+
+    // Step 1: Traverse and Collect
+    vector<Node*> nodes;
+    Node* current = root;
+    while (current != NULL) {
+        nodes.push_back(current);
+        
+        if (current->bottom) {
+            Node* child = current->bottom;
+            while (child != NULL) {
+                
+                nodes.push_back(child);
+                child = child->bottom;
+                
+            }
+        }
+        current = current->next;
+    }
+    
+    
+    // Step 2: Sort the List based on values
+    sort(nodes.begin(), nodes.end(), [](const Node* a, const Node* b) {
+        return a->data < b->data;
+    });
+
+    // Step 3: Reconstruct the Linked List
+    Node* newHead = nodes[0];
+    for (size_t i = 0; i < nodes.size() - 1; ++i) {
+        nodes[i]->bottom = nodes[i + 1];
+        nodes[i]->next = nullptr; // Ensure bottom pointers are nullified
+    }
+
+    
+
+    return newHead;
+}
