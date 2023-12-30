@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int minNumberOfFrogs(string croakOfFrogs) {
+        //step-1 deal with edge cases(invalid cases) returning -1;
+        //mapping all the chars of string with int;
+        unordered_map<char, int> mp;
+        for(auto i : croakOfFrogs){
+            mp[i]++;
+            if(mp['c']<mp['r'] || mp['r']<mp['o'] || mp['o']<mp['a'] || mp['a']<mp['k']) return -1;
+        }
+
+        int count = mp['c'];
+        for(auto i: mp){
+            if(count != i.second) return -1;
+        }
+
+        int ans = 0;
+        int temp = 0;
+
+        for(auto i:croakOfFrogs){
+
+            if(i == 'c'){
+                temp++;
+            }else if(i == 'k'){
+                temp--;
+            }
+            if(temp>ans){
+                ans = temp;
+            }
+        }
+
+        return ans;
+    }
+};
