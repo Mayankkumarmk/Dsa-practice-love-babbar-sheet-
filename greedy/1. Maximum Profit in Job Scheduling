@@ -1,0 +1,74 @@
+SIMPLE RECURSION [Not Accepted] && [ 16 / 30 test cases passed ]
+IDEA : Appraoch is very classical, first merge all the given array into one, so working with them together will be easy..
+After that, Same Knapsack pattern followed (like Maximum earning from taxi): Either Pick the current job or leave it as it is..
+But carefully, we have to pick the next job only when if last pickup was over (No overlapping on Job Timings).
+class Solution {
+private: 
+    int dfs(vector<vector<int>> &nums, int idx, int prevEndTime){
+        if(idx >= size(nums)) return 0;
+        int skipIt = dfs(nums, idx + 1, prevEndTime);
+        int takeIt = prevEndTime <= nums[idx][0]? nums[idx][2] + dfs(nums, idx + 1, nums[idx][1]) : 0;
+        return max(skipIt, takeIt);
+    }
+public:
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+        int N = size(startTime);   
+        vector<vector<int>> nums;
+        for(int i = 0; i < N; ++i)  nums.push_back({startTime[i], endTime[i], profit[i]});
+        sort(begin(nums), end(nums));
+        return dfs(nums, 0, 1);
+    }
+};
+Time Comeplxity : O(2 ^ N), Where N : len of nums or startTime
+Space Complexity : O(N), ignoring recursion stack
+
+RECURSION + MEMOIZATION (DP Solution) [Not Accepted] && [ 22 / 30 test cases passed ]
+Reason why This 2nd Solution is not accepted because, we incrementing the idx by 1, for finding the next greater job which will be our potenial answer..
+Because, our starting job time will be sorted, so we take a advantage of it, && do binary search on it for finding the next greater start-time job. (Which we'll see in Next solution)
+class Solution {
+private: int memo[1000001], N;
+private: 
+    int dfs(vector<vector<int>> &nums, int idx, int prevEndTime){
+        if(idx >= N) return 0;
+        if(memo[prevEndTime] != -1) return memo[prevEndTime];
+        int skipIt = dfs(nums, idx + 1, prevEndTime);
+        int takeIt = prevEndTime <= nums[idx][0] ? nums[idx][2] + dfs(nums, idx + 1, nums[idx][1]) : 0;
+        return memo[prevEndTime] = max(skipIt, takeIt);
+    }
+public:
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+		N = size(startTime);   
+        vector<vector<int>> nums;
+        for(int i = 0; i < N; ++i)  nums.push_back({startTime[i], endTime[i], profit[i]});
+        sort(begin(nums), end(nums));
+		memset(memo, -1, sizeof(memo));    
+        return dfs(nums, 0, 1);
+    }
+};
+Time Comeplxity : O(N * N) , Where N : len of nums or startTime
+Space Complexity : O(N), ignoring recursion stack
+
+MEMOIZATION + BINARY SEARCH (DP Solution) [Accepted] && [ 30 / 30 test cases passed ]
+class Solution {
+private: int N, memo[1000001];
+private:
+    int dfs(vector<vector<int>>&nums, int idx){
+        if(idx >= N) return 0;
+        if(memo[idx]) return memo[idx];
+        int lo = 0, hi = N - 1, newJobTime = N + 1;
+        while(lo <= hi){
+            int mid = (lo + hi) >> 1;
+            if(nums[mid][0] >= nums[idx][1]) newJobTime = mid, hi = mid - 1;
+            else lo = mid + 1;
+        }
+        return memo[idx] = max(dfs(nums, idx + 1), nums[idx][2] + dfs(nums, newJobTime));
+    }
+public:
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
+        N = size(profit);
+        vector<vector<int>> nums;
+        for(int i = 0; i < N; ++i) nums.push_back({startTime[i], endTime[i], profit[i]});
+        sort(begin(nums), end(nums));
+        return dfs(nums, 0);
+    }
+};
