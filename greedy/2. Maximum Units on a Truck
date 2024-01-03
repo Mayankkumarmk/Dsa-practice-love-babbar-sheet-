@@ -1,0 +1,31 @@
+class Solution {
+private:
+    bool static comparator(vector<int> box1, vector<int> box2) {
+        return box1[1] > box2[1];
+    }
+
+public:
+    int maximumUnits(vector<vector<int>>& box, int ts) {
+        int ans = 0;
+        int totalUnits;
+        sort(box.begin(), box.end(), comparator);
+        // for(auto i: box){
+        //     cout<<"["<<i[0]<<","<<i[1]<<"]"<< " ";
+        // }
+        cout<<endl;
+        int i = 0;
+        while (ts && i<box.size()) {
+            if (ts > box[i][0]) {
+                totalUnits = box[i][0] * box[i][1];
+                ans += totalUnits;
+                ts = ts - box[i][0];
+            } else if (ts <= box[i][0]) {
+                totalUnits = ts * box[i][1];
+                ans += totalUnits;
+                ts = 0;
+            }
+            i++;
+        }
+        return ans;
+    }
+};
