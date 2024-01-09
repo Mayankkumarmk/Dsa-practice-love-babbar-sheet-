@@ -1,0 +1,32 @@
+class Solution {
+public:
+    void subsequence(vector<int> nums, vector<vector<int>>& output, int i,
+                     vector<int>& set) {
+        // base
+        int n = nums.size();
+        if (i == n) {
+            if (find(output.begin(), output.end(), set)
+                == output.end()) { output.push_back(set); 
+            }
+
+            return;
+        }
+
+        // pick and not pick to add all subsequence or subsets;
+        set.push_back(nums[i]); // pick elements
+        subsequence(nums, output, i + 1, set);
+
+        set.pop_back(); // not picking case
+        subsequence(nums, output, i + 1, set);
+    }
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+
+        vector<vector<int>> output;
+        vector<int> set;
+        sort(nums.begin(), nums.end());
+
+        //    same as print all the subsequences.
+        subsequence(nums, output, 0, set);
+        return output;
+    }
+};
