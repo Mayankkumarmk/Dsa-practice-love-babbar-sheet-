@@ -1,0 +1,54 @@
+
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+
+using namespace std;
+
+void generateSentences(string s, unordered_set<string>& dictionary, string currentSentence, int index, vector<string>& result) {
+    if (index == s.length()) {
+        return;
+    }
+
+    for (int i = index; i < s.length(); ++i) {
+        string word = s.substr(index, index - i + 1);
+
+        if (dictionary.find(word) != dictionary.end()) {
+            string updatedSentence = currentSentence.empty() ? word : currentSentence + " " + word;
+            
+            // Recursive call to generate sentences
+            generateSentences(s, dictionary, updatedSentence, i + 1, result);
+
+            // Remove the last word added in this iteration
+            if (!updatedSentence.empty()) {
+                size_t lastSpace = updatedSentence.find_last_of(" ");
+                if (lastSpace != string::npos) {
+                    updatedSentence.erase(lastSpace);
+                } else {
+                    updatedSentence.clear();
+                }
+            }
+        }
+    }
+}
+
+vector<string> wordBreak(string s, unordered_set<string>& dictionary) {
+    vector<string> result;
+    generateSentences(s, dictionary, "", 0, result);
+    return result;
+}
+
+int main() {
+    string s = "catsanddog";
+    unordered_set<string> dictionary = {"cat", "cats", "and", "sand", "dog"};
+
+    vector<string> result = wordBreak(s, dictionary);
+
+    cout << "Possible Sentences:" << endl;
+    for (const string& sentence : result) {
+        cout << sentence << endl;
+    }
+
+    return 0;
+}
+``
